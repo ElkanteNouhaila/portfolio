@@ -1,49 +1,68 @@
-// src/components/Skills.tsx
 import { useState } from "react";
+import {
+  FaReact,
+  FaHtml5,
+  FaGitAlt,
+  FaDocker,
+  FaDatabase
+} from "react-icons/fa";
+
+import {
+  SiTypescript,
+  SiTailwindcss,
+  SiFlask,
+  SiTensorflow,
+  SiScikitlearn,
+  SiPostman,
+  SiFigma,
+  SiJupyter,
+} from "react-icons/si";
+
+import { BsCodeSlash } from "react-icons/bs";
 
 const skillsData = [
   {
     category: "Frontend",
-    icon: "🎨",
+    icon: <BsCodeSlash />,
     description: "Building modern, responsive, and accessible user interfaces.",
     skills: [
-      { name: "React", level: 90, icon: "⚛️" },
-      { name: "TypeScript", level: 85, icon: "🔷" },
-      { name: "Tailwind CSS", level: 92, icon: "💨" },
-      { name: "HTML & CSS", level: 95, icon: "🌐" },
+      { name: "React", level: 90, icon: <FaReact /> },
+      { name: "TypeScript", level: 85, icon: <SiTypescript /> },
+      { name: "Tailwind CSS", level: 92, icon: <SiTailwindcss /> },
+      { name: "HTML & CSS", level: 95, icon: <FaHtml5 /> },
     ],
   },
   {
     category: "Backend",
-    icon: "⚙️",
+    icon: <BsCodeSlash />,
     description: "Designing robust APIs and managing relational databases.",
     skills: [
-      { name: "Flask", level: 82, icon: "🐍" },
-      { name: "SQL Server", level: 75, icon: "🗄️" },
-      { name: "REST APIs", level: 85, icon: "🔗" },
-      { name: "JWT Auth", level: 78, icon: "🔐" },
+      { name: "Flask", level: 82, icon: <SiFlask /> },
+      { name: "SQL Server", level: 75, icon: <FaDatabase  /> },
+      { name: "REST APIs", level: 85, icon: <BsCodeSlash /> },
+      { name: "JWT Auth", level: 78, icon: <BsCodeSlash /> },
     ],
   },
   {
     category: "AI & NLP",
-    icon: "🤖",
+    icon: <BsCodeSlash />,
     description: "Training and deploying intelligent language models.",
     skills: [
-      { name: "NLP", level: 88, icon: "💬" },
-      { name: "TensorFlow", level: 75, icon: "🧠" },
-      { name: "Intent Classification", level: 85, icon: "🎯" },
-      { name: "Scikit-learn", level: 72, icon: "📊" },
+      { name: "NLP", level: 88, icon: <BsCodeSlash /> },
+      { name: "TensorFlow", level: 75, icon: <SiTensorflow /> },
+      { name: "Intent Classification", level: 85, icon: <BsCodeSlash /> },
+      { name: "Scikit-learn", level: 72, icon: <SiScikitlearn /> },
     ],
   },
 ];
 
 const tools = [
-  { name: "VS Code", icon: "💻" },
-  { name: "Git & GitHub", icon: "🐙" },
-  { name: "Figma", icon: "🎭" },
-  { name: "Postman", icon: "📮" },
-  { name: "Docker", icon: "🐳" },
-  { name: "Jupyter", icon: "📓" },
+  { name: "VS Code", icon: <BsCodeSlash /> },
+  { name: "Git & GitHub", icon: <FaGitAlt /> },
+  { name: "Figma", icon: <SiFigma /> },
+  { name: "Postman", icon: <SiPostman /> },
+  { name: "Docker", icon: <FaDocker /> },
+  { name: "Jupyter", icon: <SiJupyter /> },
 ];
 
 const getLevelLabel = (level: number) => {
@@ -72,7 +91,7 @@ const Skills = () => {
           Technologies I use to turn ideas into real, working products.
         </p>
 
-        {/* Tab Switcher */}
+        {/* Tabs */}
         <div className="flex justify-center gap-3 flex-wrap mb-10">
           {skillsData.map((cat, idx) => (
             <button
@@ -84,26 +103,24 @@ const Skills = () => {
                   : "bg-white/5 border-white/5 text-gray-400 hover:text-white hover:border-white/20"
               }`}
             >
-              <span>{cat.icon}</span>
+              <span className="text-lg">{cat.icon}</span>
               {cat.category}
             </button>
           ))}
         </div>
 
-        {/* Main Panel */}
+        {/* Content */}
         <div className="grid md:grid-cols-5 gap-6 mb-8">
 
-          {/* Left: description + radial summary */}
+          {/* Left */}
           <div className="md:col-span-2 bg-[#111111] border border-white/5 rounded-2xl p-6 flex flex-col justify-between">
             <div>
-              <div className="text-4xl mb-4">{current.icon}</div>
-              <h3 className="text-xl font-bold text-white mb-2">{current.category}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed mb-6">
-                {current.description}
-              </p>
+              <div className="text-4xl mb-4 text-[#b58742]">{current.icon}</div>
+              <h3 className="text-xl font-bold mb-2">{current.category}</h3>
+              <p className="text-gray-500 text-sm mb-6">{current.description}</p>
             </div>
 
-            {/* Average proficiency */}
+            {/* Average */}
             <div>
               <div className="flex justify-between text-xs text-gray-500 mb-2">
                 <span>Average Proficiency</span>
@@ -117,7 +134,7 @@ const Skills = () => {
               </div>
               <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#b58742] to-[#e2b96f] rounded-full transition-all duration-700"
+                  className="h-full bg-gradient-to-r from-[#b58742] to-[#e2b96f]"
                   style={{
                     width: `${Math.round(
                       current.skills.reduce((s, sk) => s + sk.level, 0) /
@@ -129,27 +146,32 @@ const Skills = () => {
             </div>
           </div>
 
-          {/* Right: skill bars */}
+          {/* Right */}
           <div className="md:col-span-3 bg-[#111111] border border-white/5 rounded-2xl p-6 flex flex-col gap-5">
             {current.skills.map((skill, i) => {
               const { label, color } = getLevelLabel(skill.level);
               return (
-                <div key={i} className="group/skill">
-                  <div className="flex items-center justify-between mb-2">
+                <div key={i} className="group">
+                  <div className="flex justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg">{skill.icon}</span>
-                      <span className="text-sm font-medium text-white">{skill.name}</span>
+                      <span className="text-xl text-[#b58742] group-hover:scale-110 transition">
+                        {skill.icon}
+                      </span>
+                      <span className="text-sm font-medium">{skill.name}</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className={`text-[11px] font-semibold ${color}`}>{label}</span>
-                      <span className="text-xs text-gray-500 font-mono w-8 text-right">
+                    <div className="flex gap-3">
+                      <span className={`text-xs font-semibold ${color}`}>
+                        {label}
+                      </span>
+                      <span className="text-xs text-gray-500 w-8 text-right">
                         {skill.level}%
                       </span>
                     </div>
                   </div>
+
                   <div className="h-2 bg-white/5 rounded-full overflow-hidden">
                     <div
-                      className="h-full rounded-full transition-all duration-1000 ease-out"
+                      className="h-full rounded-full transition-all duration-1000"
                       style={{
                         width: `${skill.level}%`,
                         background:
@@ -163,19 +185,19 @@ const Skills = () => {
           </div>
         </div>
 
-        {/* Tools & Others strip */}
+        {/* Tools */}
         <div className="bg-[#111111] border border-white/5 rounded-2xl px-6 py-5">
-          <p className="text-xs text-gray-600 font-semibold uppercase tracking-widest mb-4">
+          <p className="text-xs text-gray-600 uppercase mb-4">
             Tools & Environment
           </p>
           <div className="flex flex-wrap gap-3">
             {tools.map((tool) => (
               <div
                 key={tool.name}
-                className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-[#b58742]/10 hover:border-[#b58742]/30 border border-white/5 rounded-xl text-sm text-gray-400 hover:text-[#b58742] transition-all duration-300 cursor-default"
+                className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-xl text-sm text-gray-400 hover:text-[#b58742] hover:bg-[#b58742]/10 transition"
               >
-                <span>{tool.icon}</span>
-                <span className="font-medium">{tool.name}</span>
+                <span className="text-lg">{tool.icon}</span>
+                {tool.name}
               </div>
             ))}
           </div>
