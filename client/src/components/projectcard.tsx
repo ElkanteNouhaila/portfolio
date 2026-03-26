@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { HiArrowUpRight } from "react-icons/hi2";
+import { SiVercel } from "react-icons/si";
 
 /* ─── Types ─── */
 interface Project {
@@ -11,6 +12,7 @@ interface Project {
   image: string;
   tags: string[];
   category: string;
+  vercel?:string | null;
   github?: string | null;
   demo?: string | null;
   featured: boolean;
@@ -20,26 +22,27 @@ interface Project {
 const allProjects: Project[] = [
   {
     id: 1,
-    title: "AI Customer Support Chatbot",
+    title: "Luxury Touch – Furniture Website",
     description:
-      "A fully functional NLP-powered chatbot that handles customer queries, detects intent with 94% accuracy, and escalates complex issues to human agents.",
-    image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&q=80",
-    tags: ["Python", "TensorFlow", "Flask", "NLP"],
-    category: "AI",
-    github: "https://github.com",
-    demo: "https://demo.com",
+      "Designed and developed a modern furniture website using Next.js, focusing on elegant UI/UX and responsive design. The platform showcases home décor products with smooth navigation and a scalable component-based architecture.",    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80",
+    tags: ["Next.js", "React", "Tailwind CSS", "UI/UX"],
+    category: "Frontend",
+    github: "https://github.com/ElkanteNouhaila/furniture-next", 
+    vercel:"https://furniture-next-theta.vercel.app/",
+    demo: null, 
     featured: true,
   },
   {
     id: 2,
-    title: "Portfolio CMS Dashboard",
+    title: "AI Customer Support Chatbot",
     description:
-      "A custom content management system to manage portfolio projects, skills, and contact messages with a sleek admin interface.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80",
-    tags: ["React", "TypeScript", "Tailwind CSS"],
-    category: "Frontend",
-    github: "https://github.com",
-    demo: "https://demo.com",
+      "Developed an AI-powered chatbot for Marjane Mall using Flask and NLP. Implemented intent classification to handle user queries such as product prices and availability, with a modular design allowing future integration with a SQL database.",
+    image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&q=80",
+    tags: ["Python", "Flask", "NLP", "TensorFlow"],
+    category: "AI",
+    github: "https://github.com/ElkanteNouhaila/ChatbotMarjaneMall", 
+    vercel:"https://portfolio-cms-kwfv.vercel.app/",
+    demo: null,
     featured: true,
   },
   {
@@ -51,9 +54,10 @@ const allProjects: Project[] = [
     tags: ["Python", "TensorFlow", "NLP", "Scikit-learn"],
     category: "AI",
     github: "https://github.com",
+    vercel:"",
+    demo:null,
     featured: false,
   },
-  // ...add more projects
 ];
 
 const categories = ["All", "AI", "Frontend", "Fullstack"];
@@ -167,7 +171,7 @@ const FeaturedCard = ({ project }: { project: Project }) => (
       <h3 className="text-lg font-semibold text-white group-hover:text-[#b58742] transition-colors mb-2">
         {project.title}
       </h3>
-      <p className="text-gray-500 text-sm leading-relaxed mb-5 line-clamp-2">
+      <p className="text-gray-500 text-sm leading-relaxed mb-5 ">
         {project.description}
       </p>
       <div className="flex flex-wrap gap-2 mb-5">
@@ -191,6 +195,16 @@ const FeaturedCard = ({ project }: { project: Project }) => (
             className="flex items-center gap-2 text-xs text-gray-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-white/5 transition-all duration-200"
           >
             <FaGithub size={14} /> GitHub
+          </a>
+        )}
+        {project.vercel && (
+          <a
+            href={project.vercel}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 text-xs text-gray-400 hover:text-white px-3 py-1.5 rounded-lg hover:bg-white/5 transition-all duration-200"
+          >
+            <SiVercel size={14} /> Vercel
           </a>
         )}
         {project.demo && (
@@ -224,6 +238,16 @@ const RegularCard = ({ project }: { project: Project }) => (
             className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all"
           >
             <FaGithub size={14} />
+          </a>
+        )}
+        {project.vercel && (
+          <a
+            href={project.vercel}
+            target="_blank"
+            rel="noreferrer"
+            className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+          >
+            <SiVercel size={14} />
           </a>
         )}
         {project.demo && (
