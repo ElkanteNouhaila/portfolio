@@ -42,7 +42,7 @@ const allProjects: Project[] = [
     category: "AI",
     github: "https://github.com/ElkanteNouhaila/ChatbotMarjaneMall", 
     vercel:"https://portfolio-cms-kwfv.vercel.app/",
-    demo: "",
+    demo: "/videos/chatbotMM-demo.mp4",
     featured: true,
   },
   {
