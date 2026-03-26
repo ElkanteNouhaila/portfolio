@@ -45,19 +45,6 @@ const allProjects: Project[] = [
     demo: "/videos/chatbotMM-demo.mp4",
     featured: true,
   },
-  {
-    id: 3,
-    title: "Intent Classification Engine",
-    description:
-      "A machine learning pipeline for classifying user intents from raw text using TF-IDF and deep learning, trained on custom datasets.",
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
-    tags: ["Python", "TensorFlow", "NLP", "Scikit-learn"],
-    category: "AI",
-    github: "https://github.com",
-    vercel:"",
-    demo:null,
-    featured: false,
-  },
 ];
 
 const categories = ["All", "AI", "Frontend", "Fullstack"];
