@@ -26,7 +26,7 @@ const allProjects: Project[] = [
     description:
       "Designed and developed a modern furniture website using Next.js, focusing on elegant UI/UX and responsive design. The platform showcases home décor products with smooth navigation and a scalable component-based architecture.",    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80",
     tags: ["Next.js", "React", "Tailwind CSS", "UI/UX"],
-    category: "Frontend",
+    category: "Fullstack",
     github: "https://github.com/ElkanteNouhaila/furniture-next", 
     vercel:"https://furniture-next-theta.vercel.app/",
     demo: null, 
@@ -40,14 +40,14 @@ const allProjects: Project[] = [
     image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=600&q=80",
     tags: ["Python", "Flask", "NLP", "TensorFlow"],
     category: "AI",
-    github: "https://github.com/ElkanteNouhaila/ChatbotMarjaneMall", 
-    vercel:"https://portfolio-cms-kwfv.vercel.app/",
+    github: "https://github.com/ElkanteNouhaila/MM-chatbot", 
+    vercel:"",
     demo: "https://drive.google.com/file/d/1ba_IO1Td8t7tQxlTtfx7oDwPdz2q0iou/view?usp=drive_link",
     featured: true,
   },
 ];
 
-const categories = ["All", "AI", "Frontend", "Fullstack"];
+const categories = ["All", "AI", "Fullstack"];
 
 const tagColors: Record<string, string> = {
   React: "bg-blue-500/10 text-blue-400 border-blue-500/20",

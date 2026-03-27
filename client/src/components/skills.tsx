@@ -4,18 +4,24 @@ import {
   FaHtml5,
   FaGitAlt,
   FaDocker,
-  FaDatabase
+  FaDatabase,
+   
 } from "react-icons/fa";
 
+
+
 import {
+  SiPython, 
+  SiExpress,
+  SiNextdotjs ,
   SiTypescript,
   SiTailwindcss,
   SiFlask,
   SiTensorflow,
   SiScikitlearn,
   SiPostman,
-  SiFigma,
-  SiJupyter,
+  SiVercel, 
+  SiRender,
 } from "react-icons/si";
 
 import { BsCodeSlash } from "react-icons/bs";
@@ -27,6 +33,7 @@ const skillsData = [
     description: "Building modern, responsive, and accessible user interfaces.",
     skills: [
       { name: "React", level: 90, icon: <FaReact /> },
+      { name: "Next.js", level: 88, icon: <SiNextdotjs /> },
       { name: "TypeScript", level: 85, icon: <SiTypescript /> },
       { name: "Tailwind CSS", level: 92, icon: <SiTailwindcss /> },
       { name: "HTML & CSS", level: 95, icon: <FaHtml5 /> },
@@ -37,21 +44,24 @@ const skillsData = [
     icon: <BsCodeSlash />,
     description: "Designing robust APIs and managing relational databases.",
     skills: [
+      { name: "Python", level: 85, icon: <SiPython /> },       
       { name: "Flask", level: 82, icon: <SiFlask /> },
+      { name: "Express.js", level: 80, icon: <SiExpress /> },
       { name: "SQL Server", level: 75, icon: <FaDatabase  /> },
       { name: "REST APIs", level: 85, icon: <BsCodeSlash /> },
       { name: "JWT Auth", level: 78, icon: <BsCodeSlash /> },
     ],
   },
   {
-    category: "AI & NLP",
+    category: "AI",
     icon: <BsCodeSlash />,
     description: "Training and deploying intelligent language models.",
     skills: [
-      { name: "NLP", level: 88, icon: <BsCodeSlash /> },
+      { name: "Machine Learning", level: 85, icon: <SiScikitlearn /> },
+      { name: "Deep Learning", level: 82, icon: <SiTensorflow /> },
       { name: "TensorFlow", level: 75, icon: <SiTensorflow /> },
+      { name: "NLP", level: 88, icon: <BsCodeSlash /> },
       { name: "Intent Classification", level: 85, icon: <BsCodeSlash /> },
-      { name: "Scikit-learn", level: 72, icon: <SiScikitlearn /> },
     ],
   },
 ];
@@ -59,10 +69,11 @@ const skillsData = [
 const tools = [
   { name: "VS Code", icon: <BsCodeSlash /> },
   { name: "Git & GitHub", icon: <FaGitAlt /> },
-  { name: "Figma", icon: <SiFigma /> },
   { name: "Postman", icon: <SiPostman /> },
   { name: "Docker", icon: <FaDocker /> },
-  { name: "Jupyter", icon: <SiJupyter /> },
+  { name: "Vercel", icon: <SiVercel /> },
+  { name: "Render", icon: <SiRender /> },
+  { name: "Cursor", icon: < SiRender /> },
 ];
 
 const getLevelLabel = (level: number) => {
