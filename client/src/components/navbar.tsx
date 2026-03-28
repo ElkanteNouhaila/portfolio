@@ -1,5 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { LuBrainCircuit } from "react-icons/lu";
+
 
 const Navbar = () => {
   const location = useLocation();
@@ -81,11 +83,10 @@ const Navbar = () => {
           className="group flex items-center gap-2"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <span className="w-8 h-8 rounded-lg bg-[#b58742] flex items-center justify-center text-black font-bold text-sm group-hover:rotate-12 transition-transform duration-300">
-            NEK
-          </span>
-          <span className="text-white font-semibold text-lg tracking-tight">
-            Nouhaila<span className="text-[#b58742]">.</span>
+          <LuBrainCircuit className="text-[#b58742] w-6 h-6" />
+          {/* Text */}
+          <span className="font-bold text-xl text-white">
+            Nouhaila <span className="text-[#b58742]">El Kante</span>
           </span>
         </Link>
 
