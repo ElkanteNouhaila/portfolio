@@ -1,13 +1,21 @@
+import {Link} from "react-router-dom";
+import { LuBrainCircuit } from "react-icons/lu";
+
 export const Footer = () => (
   <footer className="bg-[#0a0a0a] border-t border-white/5 text-white py-8 px-6">
     <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
       <div className="flex items-center gap-2">
-        <span className="w-7 h-7 rounded-lg bg-[#b58742] flex items-center justify-center text-black font-bold text-xs">
-          N
-        </span>
-        <span className="text-white font-semibold text-sm">
-          Nouhaila<span className="text-[#b58742]">.</span>
-        </span>
+      <Link
+          to="/"
+          className="group flex items-center gap-2"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <LuBrainCircuit className="text-[#b58742] w-6 h-6" />
+          {/* Text */}
+          <span className="font-bold text-xl text-white">
+            Nouhaila <span className="text-[#b58742]">El Kante</span>
+          </span>
+        </Link>
       </div>
 
       <p className="text-gray-600 text-xs text-center">
