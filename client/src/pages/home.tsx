@@ -8,9 +8,9 @@ export const Home = () => {
   return (
     <>
       <Hero />   
+      <About/>
       <Skills/>
       <ProjectCard/>
-      <About/>
       <Contact/>
     </>
   );

@@ -23,9 +23,9 @@ import {
   SiVercel, 
   SiRender,
 } from "react-icons/si";
-import { PiCubeTransparentDuotone } from "react-icons/pi";
 
 import { BsCodeSlash } from "react-icons/bs";
+
 
 const skillsData = [
   {
@@ -74,7 +74,7 @@ const tools = [
   { name: "Docker", icon: <FaDocker /> },
   { name: "Vercel", icon: <SiVercel /> },
   { name: "Render", icon: <SiRender /> },
-  { name: "Cursor", icon: <PiCubeTransparentDuotone /> },
+  { name: "Cursor", icon: <img src="/cursor.svg" alt="Cursor" className="w-5 h-5" /> },
 ];
 
 const getLevelLabel = (level: number) => {

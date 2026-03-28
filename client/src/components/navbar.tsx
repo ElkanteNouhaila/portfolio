@@ -59,9 +59,9 @@ const Navbar = () => {
 
   // Section anchor links
   const sectionLinks = [
+    { name: "About", id: "about" },
     { name: "Skills", id: "skills" },
     { name: "Projects", id: "projects" },
-    { name: "About", id: "about" },
     { name: "Contact", id: "contact" },
   ];
 
@@ -82,7 +82,7 @@ const Navbar = () => {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <span className="w-8 h-8 rounded-lg bg-[#b58742] flex items-center justify-center text-black font-bold text-sm group-hover:rotate-12 transition-transform duration-300">
-            N
+            NEK
           </span>
           <span className="text-white font-semibold text-lg tracking-tight">
             Nouhaila<span className="text-[#b58742]">.</span>
