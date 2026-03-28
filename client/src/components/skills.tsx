@@ -5,7 +5,8 @@ import {
   FaGitAlt,
   FaDocker,
   FaDatabase,
-   
+  FaPalette ,
+  FaServer 
 } from "react-icons/fa";
 
 
@@ -22,15 +23,19 @@ import {
   SiPostman,
   SiVercel, 
   SiRender,
+  SiPostgresql, 
+  SiMongodb
 } from "react-icons/si";
 
 import { BsCodeSlash } from "react-icons/bs";
+
+import { LuBrainCircuit } from "react-icons/lu";
 
 
 const skillsData = [
   {
     category: "Frontend",
-    icon: <BsCodeSlash />,
+    icon: <FaPalette  />,
     description: "Building modern, responsive, and accessible user interfaces.",
     skills: [
       { name: "React", level: 90, icon: <FaReact /> },
@@ -42,20 +47,24 @@ const skillsData = [
   },
   {
     category: "Backend",
-    icon: <BsCodeSlash />,
+    icon: <FaServer  />,
     description: "Designing robust APIs and managing relational databases.",
     skills: [
       { name: "Python", level: 85, icon: <SiPython /> },       
       { name: "Flask", level: 82, icon: <SiFlask /> },
       { name: "Express.js", level: 80, icon: <SiExpress /> },
-      { name: "SQL Server", level: 75, icon: <FaDatabase  /> },
+  
+      { name: "PostgreSQL", level: 75, icon: <SiPostgresql /> },
+      { name: "MongoDB", level: 78, icon: <SiMongodb /> },
+  
+      { name: "SQL Server", level: 75, icon: <FaDatabase /> },
       { name: "REST APIs", level: 85, icon: <BsCodeSlash /> },
       { name: "JWT Auth", level: 78, icon: <BsCodeSlash /> },
     ],
   },
   {
     category: "AI",
-    icon: <BsCodeSlash />,
+    icon: <LuBrainCircuit />,
     description: "Training and deploying intelligent language models.",
     skills: [
       { name: "Machine Learning", level: 85, icon: <SiScikitlearn /> },
@@ -89,8 +98,8 @@ const Skills = () => {
   const current = skillsData[activeTab];
 
   return (
-    <section className="py-24 bg-[#0f0f0f] text-white px-6" id="skills">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-24 bg-[#0f0f0f] text-white px-6"  id="skills">
+      <div className="max-w-5xl mx-auto ">
 
         {/* Header */}
         <p className="text-[#b58742] text-xs font-semibold tracking-widest text-center uppercase mb-3">

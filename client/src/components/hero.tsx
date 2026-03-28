@@ -44,10 +44,10 @@ const Hero = () => {
   
           {/* Description */}
           <p className="mt-8 text-gray-400 text-lg leading-relaxed max-w-xl mx-auto">
-            Crafting intelligent web experiences that merge{" "}
-            <span className="text-white font-medium">modern UI</span> with{" "}
-            <span className="text-[#b58742] font-medium">AI-driven solutions</span>.
-          </p>
+  I create scalable and intelligent digital products by combining{" "}
+  <span className="text-white font-medium">modern web technologies</span> with{" "}
+  <span className="text-[#b58742] font-medium">advanced AI systems</span>.
+</p>
   
           {/* CTA Buttons */}
           <div className="mt-10 flex justify-center gap-4 flex-wrap">

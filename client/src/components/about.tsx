@@ -26,7 +26,7 @@ const About = () => {
                 <div className="absolute -inset-3 rounded-2xl border border-[#b58742]/20 rotate-3" />
                 <div className="absolute -inset-3 rounded-2xl border border-[#b58742]/10 -rotate-3" />
                 <img
-                  src="/test.jpeg"
+                  src="/picture.jpeg"
                   alt="Nouhaila El Kante"
                   className="relative w-64 h-72 object-cover rounded-2xl shadow-2xl"
                 />

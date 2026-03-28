@@ -45,6 +45,19 @@ const allProjects: Project[] = [
     demo: "https://drive.google.com/file/d/1ba_IO1Td8t7tQxlTtfx7oDwPdz2q0iou/view?usp=drive_link",
     featured: true,
   },
+  {
+    id: 3,
+    title: "Freelance Booking Platform",
+    description:
+      "Built a scalable freelance booking platform with Node.js, Express, and MongoDB, featuring secure JWT authentication and role-based access control. Enabled freelancers to manage services and users to book them seamlessly. Designed and structured RESTful APIs and optimized data handling using Mongoose.",
+      image: "https://images.unsplash.com/photo-1550439062-609e1531270e?w=600&q=80",    tags: ["Node.js", "Express", "MongoDB", "JWT", "REST API"],
+    category: "Fullstack",
+    github: "https://github.com/ElkanteNouhaila/freelance-booking-app", 
+    vercel:"",
+    demo: null,
+    featured: true,
+  },
+  
 ];
 
 const categories = ["All", "AI", "Fullstack"];
