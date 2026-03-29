@@ -1,9 +1,9 @@
 const About = () => {
-    const stats = [
-      { value: "3+", label: "Years Experience" },
-      { value: "10+", label: "Projects Built" },
-      { value: "5+", label: "AI Models Deployed" },
-    ];
+  const stats = [
+    { value: "2+", label: "Years Learning AI & Chatbots" },
+    { value: "3+", label: "Projects Completed" },
+    { value: "1+", label: "Internships / Volunteer Work" },
+  ];
   
     return (
       <section className="py-24 bg-[#0a0a0a] text-white px-6" id="about">
