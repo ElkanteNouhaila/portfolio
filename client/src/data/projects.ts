@@ -51,5 +51,18 @@ export interface Project {
       demo: null,
       featured: true,
     },
+    {
+      id: 4,
+      title: "AI Coffee Automation with Robotic Arm",
+      description:
+        "Developed an AI-powered coffee automation system using a Niryo Ned2 robotic arm integrated with a chatbot interface. Enabled users to trigger coffee preparation through API requests, combining robotics control, backend logic, and real-time communication. Configured network communication and optimized system integration between local hardware and hosted services.",
+        image: "./public/arm_coffee.png",
+        tags: ["Python", "Flask", "Robotics", "API Integration", "Automation"],
+      category: "AI",
+      github: "", 
+      vercel: "",
+      demo: null,
+      featured: true,
+    }
     
   ];

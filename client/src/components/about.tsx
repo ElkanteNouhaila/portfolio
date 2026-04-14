@@ -1,6 +1,6 @@
 const About = () => {
   const stats = [
-    { value: "2+", label: "Years Learning AI & Chatbots" },
+    { value: "3+", label: "Years Learning AI & Chatbots & Full Stack" },
     { value: "3+", label: "Projects Completed" },
     { value: "1+", label: "Internships / Volunteer Work" },
   ];

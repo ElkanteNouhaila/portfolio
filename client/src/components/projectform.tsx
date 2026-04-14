@@ -30,8 +30,8 @@ export const ProjectForm = ({ onSubmit }: Props) => {
     { name: "title", placeholder: "Project Title", type: "input" },
     { name: "description", placeholder: "Short Description", type: "textarea" },
     { name: "image", placeholder: "Image URL", type: "input" },
-    { name: "github", placeholder: "GitHub URL (optional)", type: "input" },
-    { name: "demo", placeholder: "Live Demo URL (optional)", type: "input" },
+    { name: "github", placeholder: "GitHub URL", type: "input" },
+    { name: "demo", placeholder: "Live Demo URL", type: "input" },
   ];
 
   return (
