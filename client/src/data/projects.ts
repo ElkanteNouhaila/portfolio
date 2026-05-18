@@ -18,7 +18,8 @@ export interface Project {
       id: 1,
       title: "Luxury Touch – Furniture Website",
       description:
-        "Designed and developed a modern furniture website using Next.js, focusing on elegant UI/UX and responsive design. The platform showcases home décor products with smooth navigation and a scalable component-based architecture.",    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&q=80",
+        "Designed and developed a modern furniture website using Next.js, focusing on elegant UI/UX and responsive design. The platform showcases home décor products with smooth navigation and a scalable component-based architecture.",    
+      image: "/luxury.jpeg",
       tags: ["Next.js", "React", "Tailwind CSS", "UI/UX"],
       category: "Fullstack",
       github: "https://github.com/ElkanteNouhaila/furniture-next", 
@@ -62,6 +63,27 @@ export interface Project {
       github: "", 
       vercel: "",
       demo: null,
+      featured: true,
+    },
+    {
+      id: 5,
+      title: "BTP AI System",
+      description:
+        "Developed an AI-powered construction document analysis system focused on retrieval-augmented generation (RAG), intelligent document chunking, and source-based response generation. Built a modern dashboard interface for managing indexed documents, monitoring AI retrieval processes, and improving response accuracy through optimized metadata and vector search workflows.",
+      image: "/btp-aisystem.png",
+      tags: [
+        "Python",
+        "Flask",
+        "Pinecone",
+        "LangChain",
+        "Google Gmail API",
+        "Vite",
+        "Tailwind CSS"
+      ],
+      category: "AI",
+      github: "https://github.com/ElkanteNouhaila/btp-aisystem",
+      vercel: "",
+      demo: "https://1drv.ms/v/c/a0980bca489db486/IQBt9bWbnJgiRoobN5pP6VoiATcQqNTjFG2XOHWedAZE5lE?e=HzHdLg",
       featured: true,
     }
     
