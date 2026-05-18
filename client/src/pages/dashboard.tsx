@@ -17,13 +17,22 @@ export default function AdminDashboard() {
 
   const accent = "#b58742";
 
-  // Load from localStorage
+  // Load
   useEffect(() => {
     const saved = localStorage.getItem("portfolio-projects");
-    if (saved) setProjects(JSON.parse(saved));
+  
+    if (!saved) return;
+  
+    try {
+      const parsed = JSON.parse(saved);
+      setProjects(Array.isArray(parsed) ? parsed : []);
+    } catch (err) {
+      console.error("Invalid localStorage data", err);
+      setProjects([]);
+    }
   }, []);
 
-  // Save to localStorage
+  // Save
   useEffect(() => {
     localStorage.setItem("portfolio-projects", JSON.stringify(projects));
   }, [projects]);
@@ -89,7 +98,6 @@ export default function AdminDashboard() {
 
         <div className="p-6">
 
-          {/* LOGO */}
           <div className="mb-12">
             <h1 className="text-3xl font-bold" style={{ color: accent }}>
               Nouhaila
@@ -99,7 +107,6 @@ export default function AdminDashboard() {
             </p>
           </div>
 
-          {/* NAV */}
           <nav className="flex flex-col gap-3">
 
             <button className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#b58742]/10 border border-[#b58742]/20 text-[#b58742]">
@@ -118,18 +125,14 @@ export default function AdminDashboard() {
           </nav>
         </div>
 
-        {/* STATUS */}
         <div className="p-6 border-t border-white/10">
-
           <div className="bg-white/5 rounded-2xl p-4">
             <p className="text-sm text-gray-400">Status</p>
-
             <div className="flex items-center gap-2 mt-2">
               <div className="w-2 h-2 rounded-full bg-green-500" />
               <span className="text-sm">Online</span>
             </div>
           </div>
-
         </div>
 
       </aside>
@@ -139,9 +142,7 @@ export default function AdminDashboard() {
 
         {/* NAVBAR */}
         <header className="sticky top-0 z-50 bg-[#0f0f0f]/80 backdrop-blur-xl border-b border-white/10">
-
           <div className="flex items-center justify-between px-6 py-4">
-
             <div>
               <h1 className="text-xl font-semibold">
                 Portfolio Dashboard
@@ -162,17 +163,13 @@ export default function AdminDashboard() {
             >
               + Add Project
             </button>
-
           </div>
-
         </header>
 
         {/* CONTENT */}
         <main className="p-6 md:p-8">
 
-          {/* GRID */}
           <section>
-
             {projects.length === 0 && (
               <div className="bg-[#111111] border border-dashed border-white/10 rounded-3xl p-16 text-center text-gray-500">
                 No projects yet. Click “Add Project” to create your first portfolio item.
@@ -187,7 +184,6 @@ export default function AdminDashboard() {
                   className="bg-[#111111] border border-white/10 rounded-3xl overflow-hidden hover:border-[#b58742]/40 hover:-translate-y-1 transition-all duration-300"
                 >
 
-                  {/* IMAGE */}
                   {p.image && (
                     <img
                       src={p.image}
@@ -197,9 +193,7 @@ export default function AdminDashboard() {
 
                   <div className="p-5">
 
-                    {/* HEADER */}
                     <div className="flex justify-between mb-2">
-
                       <span className="text-xs text-gray-500 uppercase">
                         {p.category}
                       </span>
@@ -209,20 +203,16 @@ export default function AdminDashboard() {
                           Featured
                         </span>
                       )}
-
                     </div>
 
-                    {/* TITLE */}
                     <h3 className="text-lg font-semibold mb-2" style={{ color: accent }}>
                       {p.title}
                     </h3>
 
-                    {/* DESC */}
                     <p className="text-sm text-gray-400 mb-4 line-clamp-3">
                       {p.description}
                     </p>
 
-                    {/* TAGS */}
                     <div className="flex flex-wrap gap-2 mb-5">
                       {p.tags.map((tag, i) => (
                         <span
@@ -234,7 +224,6 @@ export default function AdminDashboard() {
                       ))}
                     </div>
 
-                    {/* ACTIONS */}
                     <div className="flex gap-3">
 
                       <button
@@ -297,20 +286,32 @@ export default function AdminDashboard() {
                 rows={5}
               />
 
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    setForm({
-                      ...form,
-                      image: URL.createObjectURL(file),
-                    });
-                  }
-                }}
-                className="bg-black/40 p-3 rounded-xl border border-white/10"
-              />
+              <div className="flex flex-col gap-3">
+
+                <label className="text-sm text-gray-400">
+                  Project Image
+                </label>
+
+                <label className="cursor-pointer px-4 py-3 rounded-xl border border-white/10 bg-black/40 hover:border-[#b58742] transition text-sm text-gray-300 w-fit">
+                  Choose Image
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setForm({
+                          ...form,
+                          image: URL.createObjectURL(file),
+                        });
+                      }
+                    }}
+                  />
+                </label>
+
+              </div>
 
               {form.image && (
                 <img
@@ -368,6 +369,7 @@ export default function AdminDashboard() {
           </div>
         </div>
       )}
+
     </div>
   );
 }
