@@ -10,6 +10,16 @@ const signToken = (id) =>
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   });
 
+
+  router.post("/register", async (req, res) => {
+    try {
+      const user = await User.create(req.body);
+      res.status(201).json({ message: "User created" });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
 // POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {
