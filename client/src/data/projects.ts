@@ -1,21 +1,21 @@
 /* ─── Types ─── */
-export interface Project {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    tags: string[];
-    category: string;
-    vercel?:string | null;
-    github?: string | null;
-    demo?: string | null;
-    featured: boolean;
-  }
+export type Project = {
+  _id: string;
+  title: string;
+  description: string;
+  image: string | null;
+  category: string;
+  tags: string[];
+  featured: boolean;
+  github?: string;
+  demo?: string | null;
+  vercel?: string;
+};
   
   /* ─── Data ─── */
   export const allProjects: Project[] = [
     {
-      id: 1,
+      _id: "1",
       title: "Luxury Touch – Furniture Website",
       description:
         "Designed and developed a modern furniture website using Next.js, focusing on elegant UI/UX and responsive design. The platform showcases home décor products with smooth navigation and a scalable component-based architecture.",    
@@ -28,7 +28,7 @@ export interface Project {
       featured: true,
     },
     {
-      id: 2,
+      _id: "2",
       title: "AI Customer Support Chatbot",
       description:
         "Developed an AI-powered chatbot for Marjane Mall using Flask and NLP. Implemented intent classification to handle user queries such as product prices and availability, with a modular design allowing future integration with a SQL database.",
@@ -41,7 +41,7 @@ export interface Project {
       featured: true,
     },
     {
-      id: 3,
+      _id: "3",
       title: "Freelance Booking Platform",
       description:
         "Built a scalable freelance booking platform with Node.js, Express, and MongoDB, featuring secure JWT authentication and role-based access control. Enabled freelancers to manage services and users to book them seamlessly. Designed and structured RESTful APIs and optimized data handling using Mongoose.",
@@ -53,7 +53,7 @@ export interface Project {
       featured: true,
     },
     {
-      id: 4,
+      _id: "4",
       title: "AI Coffee Automation with Robotic Arm",
       description:
         "Developed an AI-powered coffee automation system using a Niryo Ned2 robotic arm integrated with a chatbot interface. Enabled users to trigger coffee preparation through API requests, combining robotics control, backend logic, and real-time communication. Configured network communication and optimized system integration between local hardware and hosted services.",
@@ -66,7 +66,7 @@ export interface Project {
       featured: true,
     },
     {
-      id: 5,
+      _id: "5",
       title: "BTP AI System",
       description:
         "Developed an AI-powered construction document analysis system focused on retrieval-augmented generation (RAG), intelligent document chunking, and source-based response generation. Built a modern dashboard interface for managing indexed documents, monitoring AI retrieval processes, and improving response accuracy through optimized metadata and vector search workflows.",

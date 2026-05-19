@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const Project = require("../models/Project");
+const Project = require("../models/project");
 
 
 // GET ALL PROJECTS
 router.get("/", async (req, res) => {
   try {
     const projects = await Project.find().sort({ createdAt: -1 });
-    res.json(projects);
+    res.status(200).json(projects);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -18,9 +18,8 @@ router.get("/", async (req, res) => {
 // ADD PROJECT
 router.post("/", async (req, res) => {
   try {
-    const newProject = new Project(req.body);
-
-    const savedProject = await newProject.save();
+    const project = new Project(req.body);
+    const savedProject = await project.save();
 
     res.status(201).json(savedProject);
   } catch (error) {
@@ -32,9 +31,13 @@ router.post("/", async (req, res) => {
 // DELETE PROJECT
 router.delete("/:id", async (req, res) => {
   try {
-    await Project.findByIdAndDelete(req.params.id);
+    const deleted = await Project.findByIdAndDelete(req.params.id);
 
-    res.json({ message: "Project deleted" });
+    if (!deleted) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    res.status(200).json({ message: "Project deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

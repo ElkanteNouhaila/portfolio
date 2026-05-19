@@ -9,17 +9,20 @@ const Projects = () => {
   const [active, setActive] = useState("All");
 
   useEffect(() => {
-    const saved = localStorage.getItem("portfolio-projects");
-
-    if (!saved) return;
-
-    try {
-      const parsed = JSON.parse(saved);
-      setProjects(Array.isArray(parsed) ? parsed : []);
-    } catch (err) {
-      console.error("Invalid localStorage data", err);
-      setProjects([]);
-    }
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/projects");
+        const data = await res.json();
+  
+        console.log(data);
+  
+        setProjects(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  
+    fetchProjects();
   }, []);
 
   const filtered =
@@ -74,7 +77,7 @@ const Projects = () => {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((project) => (
             <ProjectCard
-              key={project.id}
+              key={project._id}
               project={project}
             />
           ))}
