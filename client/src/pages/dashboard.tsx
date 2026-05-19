@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
 
 type Project = {
-  id: string;
+  _id: string;
   title: string;
   description: string;
-  image: string | null;
+  image: string;
   category: string;
   tags: string[];
   featured: boolean;
 };
+
+type ProjectForm = {
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  tags: string[];
+  featured: boolean;
+};
+
 
 export default function AdminDashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -17,31 +27,25 @@ export default function AdminDashboard() {
 
   const accent = "#b58742";
 
-  // Load
   useEffect(() => {
-    const saved = localStorage.getItem("portfolio-projects");
-  
-    if (!saved) return;
-  
-    try {
-      const parsed = JSON.parse(saved);
-      setProjects(Array.isArray(parsed) ? parsed : []);
-    } catch (err) {
-      console.error("Invalid localStorage data", err);
-      setProjects([]);
-    }
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/projects");
+        const data = await res.json();
+        setProjects(data);
+      } catch (err) {
+        console.error("Failed to fetch projects:", err);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
-  // Save
-  useEffect(() => {
-    localStorage.setItem("portfolio-projects", JSON.stringify(projects));
-  }, [projects]);
-
-  const [form, setForm] = useState<Project>({
-    id: "",
+  
+  const [form, setForm] = useState<ProjectForm>({
     title: "",
     description: "",
-    image: null,
+    image: "",
     category: "AI",
     tags: [],
     featured: false,
@@ -49,45 +53,66 @@ export default function AdminDashboard() {
 
   const resetForm = () => {
     setForm({
-      id: "",
       title: "",
       description: "",
-      image: null,
+      image: "",
       category: "AI",
       tags: [],
       featured: false,
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!form.title || !form.description) return;
-
-    if (editingId) {
-      setProjects((prev) =>
-        prev.map((p) =>
-          p.id === editingId ? { ...form, id: editingId } : p
-        )
-      );
-      setEditingId(null);
-    } else {
-      setProjects((prev) => [
-        ...prev,
-        { ...form, id: crypto.randomUUID() },
-      ]);
-    }
-
+  
+    const payload = {
+      title: form.title,
+      description: form.description,
+      image: form.image,
+      category: form.category,
+      tags: form.tags,
+      featured: form.featured,
+      github: "",
+      demo: "",
+    };
+  
+    const res = await fetch("http://localhost:5000/api/projects", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+  
+    const newProject = await res.json();
+  
+    setProjects((prev) => [...prev, newProject]);
+  
     setIsModalOpen(false);
     resetForm();
   };
 
+
   const handleEdit = (project: Project) => {
-    setForm(project);
-    setEditingId(project.id);
+    setForm({
+      title: project.title,
+      description: project.description,
+      image: project.image || "",
+      category: project.category,
+      tags: project.tags,
+      featured: project.featured,
+    });
+  
+    setEditingId(project._id);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (id: string) => {
-    setProjects((prev) => prev.filter((p) => p.id !== id));
+  const handleDelete = async (id: string) => {
+    await fetch(`http://localhost:5000/api/projects/${id}`, {
+      method: "DELETE",
+    });
+
+    setProjects((prev) => prev.filter((p) => p._id !== id));
   };
 
   return (
@@ -180,7 +205,7 @@ export default function AdminDashboard() {
 
               {projects.map((p) => (
                 <div
-                  key={p.id}
+                  key={p._id}
                   className="bg-[#111111] border border-white/10 rounded-3xl overflow-hidden hover:border-[#b58742]/40 hover:-translate-y-1 transition-all duration-300"
                 >
 
@@ -234,7 +259,7 @@ export default function AdminDashboard() {
                       </button>
 
                       <button
-                        onClick={() => handleDelete(p.id)}
+                        onClick={() => handleDelete(p._id)}
                         className="flex-1 py-2 rounded-xl border border-red-500/20 text-red-400 hover:border-red-500/50"
                       >
                         Delete
