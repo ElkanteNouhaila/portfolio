@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ProjectCard from "./projectcard";
-import type { Project } from "../data/projects";
+import type { Project } from "../types/project";
 import { FiFolder, FiGrid, FiRefreshCcw } from "react-icons/fi";
 
 const categories = ["All", "AI", "Fullstack"];

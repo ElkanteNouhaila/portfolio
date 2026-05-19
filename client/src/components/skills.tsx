@@ -31,6 +31,9 @@ import { BsCodeSlash } from "react-icons/bs";
 
 import { LuBrainCircuit } from "react-icons/lu";
 
+function CursorIcon() {
+  return <img src="/cursor.svg" alt="" className="h-5 w-5" aria-hidden />;
+}
 
 const skillsData = [
   {
@@ -83,7 +86,8 @@ const tools = [
   { name: "Docker", icon: <FaDocker /> },
   { name: "Vercel", icon: <SiVercel /> },
   { name: "Render", icon: <SiRender /> },
-  { name: "Cursor", icon: <img src="/cursor.svg" alt="Cursor" className="w-5 h-5" /> },
+  { name: "Cursor", icon: <CursorIcon /> },
+  // { name: "Cursor", icon: <img src="/cursor.svg" alt="Cursor" className="w-5 h-5" /> },
 ];
 
 const getLevelLabel = (level: number) => {

@@ -27,6 +27,25 @@ router.post("/", async (req, res) => {
   }
 });
 
+// UPDATE PROJECT
+router.put("/:id", async (req, res) => {
+    try {
+      const updated = await Project.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true } // return updated document
+      );
+  
+      if (!updated) {
+        return res.status(404).json({ message: "Project not found" });
+      }
+  
+      res.status(200).json(updated);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
 
 // DELETE PROJECT
 router.delete("/:id", async (req, res) => {

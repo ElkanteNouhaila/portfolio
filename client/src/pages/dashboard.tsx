@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
-
-type Project = {
-  _id: string;
-  title: string;
-  description: string;
-  image: string;
-  category: string;
-  tags: string[];
-  featured: boolean;
-};
+import type { Project } from "../types/project";
 
 type ProjectForm = {
   title: string;
@@ -76,20 +67,45 @@ export default function AdminDashboard() {
       demo: "",
     };
   
-    const res = await fetch("http://localhost:5000/api/projects", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    try {
+      if (editingId) {
+        // ✅ UPDATE MODE
+        const res = await fetch(
+          `http://localhost:5000/api/projects/${editingId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          }
+        );
   
-    const newProject = await res.json();
+        const updatedProject = await res.json();
   
-    setProjects((prev) => [...prev, newProject]);
+        setProjects((prev) =>
+          prev.map((p) => (p._id === editingId ? updatedProject : p))
+        );
+      } else {
+        // ✅ CREATE MODE
+        const res = await fetch("http://localhost:5000/api/projects", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
   
-    setIsModalOpen(false);
-    resetForm();
+        const newProject = await res.json();
+        setProjects((prev) => [...prev, newProject]);
+      }
+  
+      setIsModalOpen(false);
+      setEditingId(null);
+      resetForm();
+    } catch (err) {
+      console.error("Save error:", err);
+    }
   };
 
 
@@ -321,19 +337,23 @@ export default function AdminDashboard() {
                   Choose Image
 
                   <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (file) {
-                        setForm({
-                          ...form,
-                          image: URL.createObjectURL(file),
-                        });
-                      }
-                    }}
-                  />
+  type="file"
+  accept="image/*"
+  className="hidden"
+  onChange={(e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm({
+        ...form,
+        image: reader.result as string,
+      });
+    };
+    reader.readAsDataURL(file);
+  }}
+/>
                 </label>
 
               </div>
