@@ -7,6 +7,7 @@ const projectSchema = new mongoose.Schema(
     image: String,
     github: String,
     demo: String,
+    vercel: String,
     category: { type: String, default: "AI" },
     tags: [String],
     featured: { type: Boolean, default: false },

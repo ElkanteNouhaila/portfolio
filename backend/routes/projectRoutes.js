@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Project = require("../models/project");
+const protect = require("../middleware/authMiddleware");
 
 
 // GET ALL PROJECTS
@@ -15,8 +16,8 @@ router.get("/", async (req, res) => {
 });
 
 
-// ADD PROJECT
-router.post("/", async (req, res) => {
+// ADD PROJECT (admin only)
+router.post("/", protect, async (req, res) => {
   try {
     const project = new Project(req.body);
     const savedProject = await project.save();
@@ -27,13 +28,13 @@ router.post("/", async (req, res) => {
   }
 });
 
-// UPDATE PROJECT
-router.put("/:id", async (req, res) => {
+// UPDATE PROJECT (admin only)
+router.put("/:id", protect, async (req, res) => {
     try {
       const updated = await Project.findByIdAndUpdate(
         req.params.id,
         req.body,
-        { new: true } // return updated document
+        { new: true, runValidators: true }
       );
   
       if (!updated) {
@@ -47,8 +48,8 @@ router.put("/:id", async (req, res) => {
   });
 
 
-// DELETE PROJECT
-router.delete("/:id", async (req, res) => {
+// DELETE PROJECT (admin only)
+router.delete("/:id", protect, async (req, res) => {
   try {
     const deleted = await Project.findByIdAndDelete(req.params.id);
 

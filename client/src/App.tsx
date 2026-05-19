@@ -1,39 +1,50 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Home } from "./pages/home";
 import Dashboard from "./pages/dashboard";
+import Login from "./pages/login";
 import Navbar from "./components/navbar";
 import { Footer } from "./components/footer";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function Layout() {
   const location = useLocation();
 
-  const isDashboard = location.pathname.startsWith("/dashboard");
+  const hideChrome =
+    location.pathname.startsWith("/dashboard") ||
+    location.pathname === "/login";
 
   return (
-    <div className="flex flex-col min-h-screen w-full">
+    <div className="flex min-h-screen w-full flex-col">
+      {!hideChrome && <Navbar />}
 
-      {/* SHOW ONLY OUTSIDE DASHBOARD */}
-      {!isDashboard && <Navbar />}
-
-      <main className="flex-1 w-full bg-gray-100">
+      <main className="w-full flex-1 bg-gray-100">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </main>
 
-      {/* SHOW ONLY OUTSIDE DASHBOARD */}
-      {!isDashboard && <Footer />}
-
+      {!hideChrome && <Footer />}
     </div>
   );
 }
 
 function App() {
   return (
-    <Router>
-      <Layout />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Layout />
+      </Router>
+    </AuthProvider>
   );
 }
 

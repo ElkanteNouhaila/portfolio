@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiLogOut } from "react-icons/fi";
 import type { Project } from "../types/project";
+import { useAuth } from "../context/AuthContext";
+import { apiFetch } from "../lib/api";
 
 type ProjectForm = {
   title: string;
@@ -8,20 +12,27 @@ type ProjectForm = {
   category: string;
   tags: string[];
   featured: boolean;
+  github: string;
+  vercel: string;
+  demo: string;
 };
 
 
 export default function AdminDashboard() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const accent = "#b58742";
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/projects");
+        const res = await apiFetch("/api/projects");
         const data = await res.json();
         setProjects(data);
       } catch (err) {
@@ -40,6 +51,9 @@ export default function AdminDashboard() {
     category: "AI",
     tags: [],
     featured: false,
+    github: "",
+    vercel: "",
+    demo: "",
   });
 
   const resetForm = () => {
@@ -50,61 +64,75 @@ export default function AdminDashboard() {
       category: "AI",
       tags: [],
       featured: false,
+      github: "",
+      vercel: "",
+      demo: "",
     });
   };
 
   const handleSave = async () => {
-    if (!form.title || !form.description) return;
-  
+    if (!form.title.trim() || !form.description.trim()) {
+      setSaveError("Title and description are required.");
+      return;
+    }
+
     const payload = {
-      title: form.title,
-      description: form.description,
+      title: form.title.trim(),
+      description: form.description.trim(),
       image: form.image,
       category: form.category,
       tags: form.tags,
       featured: form.featured,
-      github: "",
-      demo: "",
+      github: form.github.trim(),
+      vercel: form.vercel.trim(),
+      demo: form.demo.trim() || null,
     };
-  
+
+    setIsSaving(true);
+    setSaveError(null);
+
     try {
+      const path = editingId
+        ? `/api/projects/${editingId}`
+        : "/api/projects";
+      const method = editingId ? "PUT" : "POST";
+
+      const res = await apiFetch(path, {
+        method,
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 401) {
+        logout();
+        navigate("/login", { replace: true });
+        return;
+      }
+
+      if (!res.ok) {
+        setSaveError(data.message || "Failed to save project.");
+        return;
+      }
+
       if (editingId) {
-        // ✅ UPDATE MODE
-        const res = await fetch(
-          `http://localhost:5000/api/projects/${editingId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          }
-        );
-  
-        const updatedProject = await res.json();
-  
         setProjects((prev) =>
-          prev.map((p) => (p._id === editingId ? updatedProject : p))
+          prev.map((p) =>
+            String(p._id) === String(editingId) ? (data as Project) : p
+          )
         );
       } else {
-        // ✅ CREATE MODE
-        const res = await fetch("http://localhost:5000/api/projects", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-  
-        const newProject = await res.json();
-        setProjects((prev) => [...prev, newProject]);
+        setProjects((prev) => [...prev, data as Project]);
       }
-  
+
       setIsModalOpen(false);
       setEditingId(null);
       resetForm();
     } catch (err) {
       console.error("Save error:", err);
+      setSaveError("Could not reach the server. Is the backend running?");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -115,20 +143,42 @@ export default function AdminDashboard() {
       description: project.description,
       image: project.image || "",
       category: project.category,
-      tags: project.tags,
+      tags: project.tags ?? [],
       featured: project.featured,
+      github: project.github ?? "",
+      vercel: project.vercel ?? "",
+      demo: project.demo ?? "",
     });
-  
-    setEditingId(project._id);
+
+    setEditingId(String(project._id));
+    setSaveError(null);
     setIsModalOpen(true);
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingId(null);
+    setSaveError(null);
+    resetForm();
+  };
+
   const handleDelete = async (id: string) => {
-    await fetch(`http://localhost:5000/api/projects/${id}`, {
-      method: "DELETE",
-    });
+    const res = await apiFetch(`/api/projects/${id}`, { method: "DELETE" });
+
+    if (res.status === 401) {
+      logout();
+      navigate("/login", { replace: true });
+      return;
+    }
+
+    if (!res.ok) return;
 
     setProjects((prev) => prev.filter((p) => p._id !== id));
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -167,13 +217,18 @@ export default function AdminDashboard() {
         </div>
 
         <div className="p-6 border-t border-white/10">
-          <div className="bg-white/5 rounded-2xl p-4">
-            <p className="text-sm text-gray-400">Status</p>
-            <div className="flex items-center gap-2 mt-2">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
-              <span className="text-sm">Online</span>
-            </div>
+          <div className="mb-4 rounded-2xl bg-white/5 p-4">
+            <p className="text-xs text-gray-500">Signed in as</p>
+            <p className="mt-1 truncate text-sm text-white">{user?.email}</p>
           </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 py-3 text-sm text-gray-400 transition hover:border-red-500/30 hover:text-red-400"
+          >
+            <FiLogOut size={16} />
+            Log out
+          </button>
         </div>
 
       </aside>
@@ -197,6 +252,7 @@ export default function AdminDashboard() {
               onClick={() => {
                 resetForm();
                 setEditingId(null);
+                setSaveError(null);
                 setIsModalOpen(true);
               }}
               className="px-5 py-2.5 rounded-2xl font-medium hover:opacity-90"
@@ -300,7 +356,8 @@ export default function AdminDashboard() {
           <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-[#111111] border border-white/10 rounded-3xl p-6 relative">
 
             <button
-              onClick={() => setIsModalOpen(false)}
+              type="button"
+              onClick={closeModal}
               className="absolute top-4 right-4 text-gray-400 hover:text-white"
             >
               ✕
@@ -346,10 +403,10 @@ export default function AdminDashboard() {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setForm({
-        ...form,
+      setForm((prev) => ({
+        ...prev,
         image: reader.result as string,
-      });
+      }));
     };
     reader.readAsDataURL(file);
   }}
@@ -387,9 +444,43 @@ export default function AdminDashboard() {
                       .filter(Boolean),
                   })
                 }
-                placeholder="Tags"
+                placeholder="Tags (comma separated)"
                 className="bg-black/40 p-3 rounded-xl border border-white/10"
               />
+
+              <div className="flex flex-col gap-3 rounded-xl border border-white/10 bg-black/20 p-4">
+                <p className="text-sm font-medium text-gray-300">Links</p>
+
+                <input
+                  type="url"
+                  placeholder="GitHub URL"
+                  value={form.github}
+                  onChange={(e) =>
+                    setForm({ ...form, github: e.target.value })
+                  }
+                  className="bg-black/40 p-3 rounded-xl border border-white/10 text-sm"
+                />
+
+                <input
+                  type="url"
+                  placeholder="Vercel URL"
+                  value={form.vercel}
+                  onChange={(e) =>
+                    setForm({ ...form, vercel: e.target.value })
+                  }
+                  className="bg-black/40 p-3 rounded-xl border border-white/10 text-sm"
+                />
+
+                <input
+                  type="url"
+                  placeholder="Demo URL (live demo or video)"
+                  value={form.demo}
+                  onChange={(e) =>
+                    setForm({ ...form, demo: e.target.value })
+                  }
+                  className="bg-black/40 p-3 rounded-xl border border-white/10 text-sm"
+                />
+              </div>
 
               <label className="flex items-center gap-3 text-sm">
                 <input
@@ -402,12 +493,22 @@ export default function AdminDashboard() {
                 Featured
               </label>
 
+              {saveError && (
+                <p className="text-sm text-red-400">{saveError}</p>
+              )}
+
               <button
+                type="button"
                 onClick={handleSave}
-                className="py-3 rounded-xl font-semibold"
+                disabled={isSaving}
+                className="py-3 rounded-xl font-semibold disabled:opacity-50"
                 style={{ backgroundColor: accent }}
               >
-                {editingId ? "Update" : "Create"}
+                {isSaving
+                  ? "Saving..."
+                  : editingId
+                    ? "Update"
+                    : "Create"}
               </button>
 
             </div>

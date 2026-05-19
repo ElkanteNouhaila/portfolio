@@ -55,9 +55,7 @@ const Navbar = () => {
   };
 
   // Page route links
-  const pageLinks = [
-    { name: "Dashboard", path: "/dashboard" },
-  ];
+  const pageLinks: { name: string; path: string }[] = [];
 
   // Section anchor links
   const sectionLinks = [
