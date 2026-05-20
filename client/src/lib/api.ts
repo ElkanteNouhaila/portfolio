@@ -2,7 +2,9 @@
 // Local dev: defaults to http://localhost:5000
 export const API_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? "http://localhost:5000" : "");
+  (import.meta.env.DEV
+    ? "http://localhost:5000"
+    : "https://portfolio-i1bk.onrender.com");
 
 const TOKEN_KEY = "portfolio_auth_token";
 
