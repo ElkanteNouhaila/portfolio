@@ -1,10 +1,8 @@
-// Production on Vercel: leave VITE_API_URL unset → same-origin /api
-// Local dev: defaults to http://localhost:5000
+// Production: use VITE_API_URL from Vercel
+// Local dev: fallback to localhost
 export const API_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV
-    ? "http://localhost:5000"
-    : "https://portfolio-i1bk.onrender.com");
+  (import.meta.env.DEV ? "http://localhost:5000" : "");
 
 const TOKEN_KEY = "portfolio_auth_token";
 
@@ -30,5 +28,8 @@ export async function apiFetch(
     headers.set("Authorization", `Bearer ${token}`);
   }
 
-  return fetch(`${API_URL}${path}`, { ...options, headers });
+  return fetch(`${API_URL}${path}`, {
+    ...options,
+    headers,
+  });
 }
