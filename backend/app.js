@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+
 const connectDB = require("./config/database");
 const projectRoutes = require("./routes/projectRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -7,33 +9,45 @@ const seedAdmin = require("./utils/seedAdmin");
 
 const app = express();
 
+/* ================= CORS ================= */
+
 const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
   .split(",")
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+  .map((o) => o.trim());
 
 app.use(
   cors({
-    origin(origin, callback) {
+    origin: function (origin, callback) {
+      // allow mobile apps / postman / same-origin
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error(`CORS blocked for origin: ${origin}`));
+        return callback(null, true);
       }
+      return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
     credentials: true,
   })
 );
 
+/* ================= BODY ================= */
+
 app.use(express.json({ limit: "10mb" }));
+
+/* ================= DB + SEED ================= */
 
 let adminSeeded = false;
 
 app.use(async (req, res, next) => {
   try {
-    await connectDB();
+    if (mongoose.connection.readyState !== 1) {
+      await connectDB();
+      console.log("MongoDB connected");
+    }
 
-    if (!adminSeeded && process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
+    if (
+      !adminSeeded &&
+      process.env.ADMIN_EMAIL &&
+      process.env.ADMIN_PASSWORD
+    ) {
       await seedAdmin();
       adminSeeded = true;
     }
@@ -45,15 +59,20 @@ app.use(async (req, res, next) => {
   }
 });
 
+/* ================= ROUTES ================= */
+
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
+
+/* ================= HEALTH ================= */
 
 app.get("/", (req, res) => {
   res.send("API Running");
 });
 
 app.get("/api/health", (req, res) => {
-  const state = require("mongoose").connection.readyState;
+  const state = mongoose.connection.readyState;
+
   res.status(state === 1 ? 200 : 503).json({
     status: state === 1 ? "ok" : "disconnected",
     database: state === 1 ? "connected" : "disconnected",

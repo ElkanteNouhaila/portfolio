@@ -1,21 +1,33 @@
 const User = require("../models/User");
 
 const seedAdmin = async () => {
-  const count = await User.countDocuments();
-  if (count > 0) return;
+  try {
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
 
-  const email = process.env.ADMIN_EMAIL;
-  const password = process.env.ADMIN_PASSWORD;
+    if (!email || !password) {
+      console.warn(
+        "No admin user found. Set ADMIN_EMAIL and ADMIN_PASSWORD in .env"
+      );
+      return;
+    }
 
-  if (!email || !password) {
-    console.warn(
-      "No admin user found. Set ADMIN_EMAIL and ADMIN_PASSWORD in .env to create one."
-    );
-    return;
+    const existingAdmin = await User.findOne({ email });
+
+    if (existingAdmin) {
+      console.log("Admin already exists");
+      return;
+    }
+
+    await User.create({
+      email: email.toLowerCase().trim(),
+      password,
+    });
+
+    console.log(`Admin user created: ${email}`);
+  } catch (err) {
+    console.error("Seed admin error:", err.message);
   }
-
-  await User.create({ email, password });
-  console.log(`Admin user created: ${email}`);
 };
 
 module.exports = seedAdmin;
