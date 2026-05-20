@@ -1,4 +1,5 @@
 require("dotenv").config();
+const connectDB = require("./config/database");
 
 const app = require("./app");
 
@@ -9,7 +10,22 @@ if (!process.env.JWT_SECRET) {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Allowed origins: ${process.env.CLIENT_URL || "http://localhost:5173"}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB(); // 👈 CONNECT HERE FIRST
+
+    console.log("MongoDB connected successfully");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(
+        `Allowed origins: ${process.env.CLIENT_URL || "http://localhost:5173"}`
+      );
+    });
+  } catch (err) {
+    console.error("Database connection error:", err.message);
+    process.exit(1);
+  }
+};
+
+startServer();

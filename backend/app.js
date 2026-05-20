@@ -53,7 +53,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/health", (req, res) => {
-  res.status(200).json({ status: "ok", database: "connected" });
+  const state = require("mongoose").connection.readyState;
+  res.status(state === 1 ? 200 : 503).json({
+    status: state === 1 ? "ok" : "disconnected",
+    database: state === 1 ? "connected" : "disconnected",
+  });
 });
 
 module.exports = app;

@@ -20,10 +20,26 @@ const connectDB = async () => {
       .connect(process.env.MONGO_URI, {
         bufferCommands: false,
         maxPoolSize: 10,
-        serverSelectionTimeoutMS: 10000,
+        serverSelectionTimeoutMS: 15000,
         socketTimeoutMS: 45000,
+        family: 4,
       })
-      .then((mongooseInstance) => mongooseInstance);
+      .then((mongooseInstance) => {
+        console.log("MongoDB Atlas connected");
+        return mongooseInstance;
+      })
+      .catch((err) => {
+        cached.promise = null;
+        if (
+          err.message?.includes("unable to verify the first certificate") ||
+          err.cause?.code === "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+        ) {
+          throw new Error(
+            "TLS certificate verification failed. On Node.js 22+, run with: node --use-system-ca server.js (already set in npm scripts)."
+          );
+        }
+        throw err;
+      });
   }
 
   cached.conn = await cached.promise;
