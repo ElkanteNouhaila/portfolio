@@ -6,6 +6,6 @@ if (fs.existsSync(envPath)) {
   require("dotenv").config({ path: envPath });
 }
 
-const app = require("../backend/app");
+const app = require("../app");
 
 module.exports = app;
