@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import type { Project } from "../types/project";
-import { useAuth } from "../context/useAuth";
+import { useAuthLogic } from "../context/useAuthLogic";
 import { apiFetch } from "../lib/api";
 
 type ProjectForm = {
@@ -19,7 +19,7 @@ type ProjectForm = {
 
 
 export default function AdminDashboard() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthLogic();
   const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);

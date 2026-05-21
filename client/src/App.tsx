@@ -4,7 +4,7 @@ import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
 import Navbar from "./components/navbar";
 import { Footer } from "./components/footer";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function Layout() {

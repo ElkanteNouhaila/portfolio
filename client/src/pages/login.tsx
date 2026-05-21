@@ -1,12 +1,13 @@
-import { FormEvent, useState } from "react";
+import type { FormEvent } from "react";
+import { useState} from "react"
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuthLogic } from "../context/useAuthLogic";
 import { FiLock, FiMail } from "react-icons/fi";
 
 const accent = "#b58742";
 
 export default function Login() {
-  const { login, isAuthenticated, isLoading } = useAuth();
+  const { login, isAuthenticated, isLoading } = useAuthLogic();
   const navigate = useNavigate();
   const location = useLocation();
   const from = (location.state as { from?: { pathname: string } })?.from

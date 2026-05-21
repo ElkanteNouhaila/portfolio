@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-type User = { id: string; email: string };
+export type User = { id: string; email: string };
 
 export type AuthContextValue = {
   user: User | null;
@@ -10,4 +10,4 @@ export type AuthContextValue = {
   logout: () => void;
 };
 
-export const AuthContext = createContext<AuthContextValue | null>(null);    
+export const AuthContext = createContext<AuthContextValue | null>(null);
