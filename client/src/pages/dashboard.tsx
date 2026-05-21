@@ -4,6 +4,7 @@ import { FiLogOut } from "react-icons/fi";
 import type { Project } from "../types/project";
 import { useAuthLogic } from "../context/useAuthLogic";
 import { apiFetch } from "../lib/api";
+import { Link } from "react-router-dom";
 
 type ProjectForm = {
   title: string;
@@ -199,20 +200,17 @@ export default function AdminDashboard() {
           </div>
 
           <nav className="flex flex-col gap-3">
-
-            <button className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#b58742]/10 border border-[#b58742]/20 text-[#b58742]">
-              <span className="w-2 h-2 rounded-full bg-[#b58742]" />
+            <Link to="/dashboard" className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#b58742]/10 border border-[#b58742]/20 text-[#b58742]">
               Projects
-            </button>
+            </Link>
 
-            <button className="px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-400 hover:text-white">
+            <Link to="/dashboard/messages" className="px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-400 hover:text-white">
               Messages
-            </button>
+            </Link>
 
-            <button className="px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-400 hover:text-white">
+            <Link to="/dashboard/settings" className="px-4 py-3 rounded-2xl hover:bg-white/5 text-gray-400 hover:text-white">
               Settings
-            </button>
-
+            </Link>
           </nav>
         </div>
 

@@ -7,6 +7,7 @@ import { Footer } from "./components/footer";
 import { AuthProvider } from "./context/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+
 function Layout() {
   const location = useLocation();
 
@@ -27,6 +28,24 @@ function Layout() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/messages"
+            element={
+              <ProtectedRoute>
+                <div>Messages Page (to be built)</div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/settings"
+            element={
+              <ProtectedRoute>
+                <div>Settings Page (to be built)</div>
               </ProtectedRoute>
             }
           />

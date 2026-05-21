@@ -6,6 +6,8 @@ const connectDB = require("./config/database");
 const projectRoutes = require("./routes/projectRoutes");
 const authRoutes = require("./routes/authRoutes");
 const seedAdmin = require("./utils/seedAdmin");
+const messageRoutes = require("./routes/messageRoutes");
+
 
 const app = express();
 
@@ -15,6 +17,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://nouhailaelkante-portfolio.vercel.app"
 ];
+app.use("/api/messages", messageRoutes);
 
 app.use(
   cors({

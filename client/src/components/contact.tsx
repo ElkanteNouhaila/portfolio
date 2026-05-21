@@ -2,21 +2,51 @@ import { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { MdEmail, MdPhone } from "react-icons/md";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { apiFetch } from "../lib/api";
+
+
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
 
 const Contact = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
     if (!formRef.current) return;
-    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    emailjs
-      .sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
-      .then(() => alert("Message sent successfully! 🎉"))
-      .catch(() => alert("Something went wrong. Please try again."));
+  
+    const form = formRef.current;
+  
+    const payload = {
+      name: (form.elements.namedItem("user_name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("user_email") as HTMLInputElement).value,
+      subject: (form.elements.namedItem("subject") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+  
+    try {
+      // 1. Save in database
+      await apiFetch("/api/messages", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+  
+      // 2. Send email
+      await emailjs.sendForm(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        formRef.current,
+        PUBLIC_KEY
+      );
+  
+      alert("Message sent successfully! 🎉");
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   const socials = [
