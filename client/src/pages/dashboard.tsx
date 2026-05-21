@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiLogOut } from "react-icons/fi";
 import type { Project } from "../types/project";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import { apiFetch } from "../lib/api";
 
 type ProjectForm = {
