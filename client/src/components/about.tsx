@@ -6,9 +6,10 @@ const About = () => {
   ];
   
     return (
-      <section className="py-24 bg-[#0a0a0a] text-white px-6" id="about">
-        <div className="max-w-5xl mx-auto">
-  
+      <section className="py-24 bg-[#0f0f0f] text-white px-6" id="about">
+        
+        <div className="max-w-5xl mx-auto ">
+        
           {/* Section label */}
           <p className="text-[#b58742] text-xs font-semibold tracking-widest text-center uppercase mb-3">
             Get To Know Me

@@ -58,6 +58,7 @@ const Contact = () => {
 
   return (
     <section className="py-24 bg-[#0f0f0f] text-white px-6" id="contact">
+      
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
