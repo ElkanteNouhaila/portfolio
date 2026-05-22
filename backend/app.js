@@ -17,17 +17,16 @@ const allowedOrigins = [
   "http://localhost:5173",
   "https://nouhailaelkante-portfolio.vercel.app"
 ];
-app.use("/api/messages", messageRoutes);
 
 app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
-
+      
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-
+      
       return callback(new Error("Not allowed by CORS: " + origin));
     },
     credentials: true,
@@ -48,7 +47,7 @@ app.use(async (req, res, next) => {
       await connectDB();
       console.log("MongoDB connected");
     }
-
+    
     if (
       !adminSeeded &&
       process.env.ADMIN_EMAIL &&
@@ -57,7 +56,7 @@ app.use(async (req, res, next) => {
       await seedAdmin();
       adminSeeded = true;
     }
-
+    
     next();
   } catch (error) {
     console.error("Database connection error:", error.message);
@@ -69,6 +68,7 @@ app.use(async (req, res, next) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/messages", messageRoutes);
 
 /* ================= HEALTH ================= */
 
