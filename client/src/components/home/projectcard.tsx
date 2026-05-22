@@ -2,7 +2,7 @@ import { FaGithub } from "react-icons/fa";
 import { HiArrowUpRight, HiSparkles } from "react-icons/hi2";
 import { SiVercel } from "react-icons/si";
 import { FiFolder, FiExternalLink } from "react-icons/fi";
-import type { Project } from "../types/project";
+import type { Project } from "../../types/project";
 
 type Props = {
   project: Project;

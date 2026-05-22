@@ -2,11 +2,11 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import { Home } from "./pages/home";
 import Dashboard from "./pages/dashboard";
 import Login from "./pages/login";
-import Navbar from "./components/navbar";
-import { Footer } from "./components/footer";
+import Navbar from "./components/home/navbar";
+import { Footer } from "./components/home/footer";
 import { AuthProvider } from "./context/AuthProvider";
-import ProtectedRoute from "./components/ProtectedRoute";
-
+import ProtectedRoute from "./components/home/ProtectedRoute";
+import Messages from "./pages/messages";
 
 function Layout() {
   const location = useLocation();
@@ -36,7 +36,7 @@ function Layout() {
             path="/dashboard/messages"
             element={
               <ProtectedRoute>
-                <div>Messages Page (to be built)</div>
+                <Messages />
               </ProtectedRoute>
             }
           />

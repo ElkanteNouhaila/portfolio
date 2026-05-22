@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import ProjectCard from "./projectcard";
-import type { Project } from "../types/project";
-import { API_URL } from "../lib/api";
+import type { Project } from "../../types/project";
+import { API_URL } from "../../lib/api";
 import {
   FiFolder,
   FiRefreshCcw,

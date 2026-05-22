@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuthLogic } from "../context/useAuthLogic";
+import { useAuthLogic } from "../../context/useAuthLogic";
 
 export default function ProtectedRoute({
   children,

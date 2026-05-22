@@ -5,6 +5,9 @@ import type { Project } from "../types/project";
 import { useAuthLogic } from "../context/useAuthLogic";
 import { apiFetch } from "../lib/api";
 import { Link } from "react-router-dom";
+import DashboardLayout from "../components/dashboard/dashboardLayout";
+
+
 
 type ProjectForm = {
   title: string;
@@ -18,6 +21,15 @@ type ProjectForm = {
   demo: string;
 };
 
+export  function Messages() {
+  return (
+    <DashboardLayout>
+      <div className="p-8 text-white">
+        Messages page
+      </div>
+    </DashboardLayout>
+  );
+}
 
 export default function AdminDashboard() {
   const { user, logout } = useAuthLogic();
@@ -392,23 +404,23 @@ export default function AdminDashboard() {
                   Choose Image
 
                   <input
-  type="file"
-  accept="image/*"
-  className="hidden"
-  onChange={(e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setForm((prev) => ({
-        ...prev,
-        image: reader.result as string,
-      }));
-    };
-    reader.readAsDataURL(file);
-  }}
-/>
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      setForm((prev) => ({
+                        ...prev,
+                        image: reader.result as string,
+                      }));
+                    };
+                    reader.readAsDataURL(file);
+                  }}
+                />
                 </label>
 
               </div>
@@ -517,3 +529,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { MdEmail, MdPhone } from "react-icons/md";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { apiFetch } from "../lib/api";
+import { apiFetch } from "../../lib/api";
 
 
 const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
